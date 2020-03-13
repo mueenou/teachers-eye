@@ -1,7 +1,10 @@
 <template>
   <v-layout column justify-center align-center>
-    <v-flex xs12 sm8 md6>
-      <h1>Page de connexion</h1>
+    <v-flex xs12 sm8 md6 style="max-width: 350px; width: 100%;">
+      <h1>Connexion</h1>
+      <v-alert type="error" v-if="error">
+        {{error}}
+      </v-alert>
       <v-form ref="form" v-model="valid" lazy-validation>
         <v-text-field v-model="loginInfos.email" :rules="emailRules" label="E-mail" required></v-text-field>
         <v-text-field 
@@ -44,14 +47,16 @@ export default {
   },
   methods: {
     async loginUser() {
-      let user = await this.$store.dispatch('loginUser', this.loginInfos )
-      console.log
-      if(user.error) {
-        alert(user.error)
-      } else {
-        console.log("Connexion avec succès !")
+      try {
+        await this.$auth.loginWith('local', {
+          data: {
+            email: this.loginInfos.email,
+            password: this.loginInfos.password
+          },
+        })
         this.$store.dispatch('handleSnackbar', {displaySb: true, message: 'Connexion réussie', color: 'green'})
-        this.$router.push('/user')
+      } catch (e) {
+        this.error = "Un problème est survenue, veuillez réessayer ultéreieurement."
       }
     }
   }

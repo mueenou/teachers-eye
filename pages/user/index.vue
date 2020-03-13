@@ -1,27 +1,27 @@
 <template>
     <v-layout row wrap justify-center>
-        <v-card width="450">
+        <v-card width="450" flat color="#EFFFFF">
             <v-card-title primary-title>
-                {{currentUser.firstName}} {{currentUser.lastName}}
+                {{$auth.user.data.firstName.toUpperCase()}} {{$auth.user.data.lastName.toUpperCase()}}
             </v-card-title>
             <v-card-subtitle>
-                {{currentUser.userType ? currentUser.userType.toUpperCase() : ""}}
+                Rôle: {{$auth.user.data.userType}}
             </v-card-subtitle>
             <v-card-subtitle>
-                {{`Age: ${currentUser.age}`}}
+                Age: {{$auth.user.data.age}}
             </v-card-subtitle>
             <v-card-subtitle>
-                {{currentUser.email}}
+                E-mail: {{$auth.user.data.email}}
             </v-card-subtitle>
         </v-card>
     </v-layout>
 </template>
 
 <script>
-import { mapState } from "vuex"
+import { mapState, mapGetters } from "vuex"
 export default {
     computed: {
-        ...mapState(['currentUser'])
+        ...mapState(['auth'])
     },
 
 }

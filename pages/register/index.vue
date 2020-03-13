@@ -1,7 +1,7 @@
 <template>
   <v-layout column justify-center align-center>
     <v-flex xs12 sm8 md6>
-      <h1>Page d'inscription</h1>
+      <h1>Inscription</h1>
       <v-form ref="form" v-model="valid" lazy-validation>
         <v-text-field v-model="signupInfos.firstName" :rules="nameRules" label="First Name" required></v-text-field>
         <v-text-field v-model="signupInfos.lastName" :rules="nameRules" label="Last Name" required></v-text-field>
@@ -36,6 +36,7 @@ export default {
   data() {
     return {
       valid: true,
+      error: "",
       selected: [],
       allPromos: [
         {
@@ -117,17 +118,24 @@ export default {
       }
       this.signupUser();
     },
+
     async signupUser() {
-      let user = await this.$store.dispatch('signupUser', this.signupInfos )
-      console.log
-      if(user.error) {
-        alert(user.error)
-      } else {
-        console.log("Connexion avec succès !")
-        this.$store.dispatch('handleSnackbar', {displaySb: true, message: 'Votre compte a été créé', color: 'green'})
-        this.$router.push('/user')
+      try {
+        await this.$axios.post('signup', this.signupInfos)
+
+        await this.$auth.loginWith('local', {
+          data: {
+            email: this.signupInfos.email,
+            password: this.signupInfos.password
+          },
+        })
+
+        this.$router.push('/')
+      } catch (e) {
+        this.error = e
       }
     }
+    
   }
 };
 </script>
