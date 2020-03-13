@@ -14,7 +14,7 @@
           :type="showPassword ? 'text' : 'password'"
           :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
           @click:append="showPassword = !showPassword"></v-text-field>
-        <v-btn :disabled="!valid" color="success" class="mr-4" @click="loginUser" v-ripple>Se connecter</v-btn>
+        <v-btn :disabled="!valid" outlined tile color="#555555" class="mr-4" @click="loginUser" v-ripple>Se connecter</v-btn>
       </v-form>
     </v-flex>
   </v-layout>
