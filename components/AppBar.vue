@@ -1,29 +1,28 @@
 <template>
-  <v-app-bar :clipped-left="clipped" fixed app color="blue-grey" dense>
+  <v-app-bar :clipped-left="clipped" flat fixed app color="#EEEEEE" dense>
     <v-toolbar-title>
-      <v-btn text to="/" nuxt depressed large color="white">
+      <v-btn text to="/" nuxt depressed large color="#555555">
         <span class="font-weight-light">Teachers</span>
         <span class="font-weight-bold">' Eye</span>
       </v-btn>
     </v-toolbar-title>
     <v-spacer></v-spacer>
     <div v-if="isAuthenticated">
-      <span>{{currentUser.firstName ? currentUser.firstName  + ' ' + currentUser.lastName : ""}}</span>
-      <v-btn text class="mr-2" nuxt to="/user" small color="white">
+      <v-btn text class="mr-2" nuxt to="/user" small color="#555555">
         <v-icon>mdi-account</v-icon>
-        <span>Mon compte</span>
+        <span>{{$auth.user.data.firstName}} {{$auth.user.data.lastName}}</span>
       </v-btn>
-      <v-btn text class="mr-2" nuxt small @click="logoutUser" color="white">
+      <v-btn text class="mr-2" nuxt small @click="logoutUser" color="#555555">
         <v-icon>mdi-logout</v-icon>
         <span>Déconnexion</span>
       </v-btn>
     </div>
     <div v-else>
-      <span>{{currentUser.firstName || ""}}</span>
-      <v-btn text class="mr-2" nuxt to="/login" small color="white">
+      <span></span>
+      <v-btn text class="mr-2" nuxt to="/login" small color="#555555">
         <v-icon>mdi-login</v-icon>Connexion
       </v-btn>
-      <v-btn text class="mr-2" nuxt to="/register" small color="white">
+      <v-btn text class="mr-2" nuxt to="/register" small color="#555555">
         <span>S'inscrire</span>
       </v-btn>
     </div>
@@ -32,11 +31,11 @@
 
 <script>
 
-import { mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 export default {
   name: "Appbar",
   computed: {
-    ...mapState(['currentUser', 'isAuthenticated']),
+    ...mapGetters(['isAuthenticated', 'loggedInUser'])
   },
   data() {
     return {
@@ -45,7 +44,7 @@ export default {
   },
   methods: {
     logoutUser() {
-      this.$store.dispatch('logoutUser')
+      this.$auth.logout()
       this.$store.dispatch('handleSnackbar', {displaySb: true, message: 'Déconnexion réussie', color: 'pink'})
       this.$router.push('/login');
     },

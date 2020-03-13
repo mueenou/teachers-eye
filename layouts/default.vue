@@ -10,7 +10,7 @@
         :value="snackbar"
         :timeout="0"
     >
-        {{ `${sbMessage} ${currentUser.firstName} !` }}
+        {{ `${sbMessage}  !` }}
         <v-btn
           :color="sbColor"
           text
