@@ -21,7 +21,8 @@
 import { mapState, mapGetters } from "vuex"
 export default {
     computed: {
-        ...mapState(['auth'])
+        ...mapState(['auth', 'currentUser']),
+        middleware: ['set-state']
     },
 
 }

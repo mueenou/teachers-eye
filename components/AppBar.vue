@@ -6,6 +6,9 @@
         <span class="font-weight-bold">' Eye</span>
       </v-btn>
     </v-toolbar-title>
+    <v-btn text class="mr-2" nuxt small to="/admin" color="#555555" v-if="isAdmin" >
+        <span>Admin</span>
+      </v-btn>
     <v-spacer></v-spacer>
     <div v-if="isAuthenticated">
       <v-btn text class="mr-2" nuxt to="/user" small color="#555555">
@@ -35,7 +38,7 @@ import { mapState, mapGetters } from 'vuex'
 export default {
   name: "Appbar",
   computed: {
-    ...mapGetters(['isAuthenticated', 'loggedInUser'])
+    ...mapGetters(['isAuthenticated', 'loggedInUser']),
   },
   data() {
     return {
@@ -48,6 +51,15 @@ export default {
       this.$store.dispatch('handleSnackbar', {displaySb: true, message: 'Déconnexion réussie', color: 'pink'})
       this.$router.push('/login');
     },
+    isAdmin() {
+      if (this.loggedInUser) {
+        if (this.loggedInUser.data.status === true) {
+          return true
+        } else {
+          return false
+        }
+      }
+    }
   },
 };
 </script>
