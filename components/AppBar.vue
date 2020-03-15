@@ -11,9 +11,12 @@
       </v-btn>
     <v-spacer></v-spacer>
     <div v-if="isAuthenticated">
+      <v-btn text class="mr-2" nuxt small to="/students" color="#555555">
+        <span>Elèves</span>
+      </v-btn>
       <v-btn text class="mr-2" nuxt to="/user" small color="#555555">
         <v-icon>mdi-account</v-icon>
-        <span>{{$auth.user.data.firstName}} {{$auth.user.data.lastName}}</span>
+        <!-- <span>{{$auth.user.data.firstName || ""}} {{$auth.user.data.lastName || ""}}</span> -->
       </v-btn>
       <v-btn text class="mr-2" nuxt small @click="logoutUser" color="#555555">
         <v-icon>mdi-logout</v-icon>
