@@ -1,6 +1,6 @@
 <template>
   <v-layout column justify-center align-center>
-    <v-flex xs12 sm8 md6 style="max-width: 350px; width: 100%;">
+    <v-flex xs12 sm8 md6 style="max-width: 350px; width: 100%;" class="text-center"> 
       <h1>Connexion</h1>
       <v-alert type="error" v-if="error">
         {{error}}

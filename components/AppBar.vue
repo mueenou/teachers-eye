@@ -6,12 +6,12 @@
         <span class="font-weight-bold">' Eye</span>
       </v-btn>
     </v-toolbar-title>
-    <v-btn text class="mr-2" nuxt small to="/admin" color="#555555" v-if="isAdmin" >
-        <span>Admin</span>
-      </v-btn>
     <v-spacer></v-spacer>
     <div v-if="isAuthenticated">
-      <v-btn text class="mr-2" nuxt small to="/students" color="#555555">
+    <v-btn text class="mr-2" nuxt small to="/admin" color="#555555" v-show="loggedInUser.data.userType === 'admin'" >
+        <span>Admin</span>
+      </v-btn>
+      <v-btn text class="mr-2" nuxt small to="/students" color="#555555" v-show="loggedInUser.data.userType === 'Teacher'">
         <span>Elèves</span>
       </v-btn>
       <v-btn text class="mr-2" nuxt to="/user" small color="#555555">
@@ -54,15 +54,6 @@ export default {
       this.$store.dispatch('handleSnackbar', {displaySb: true, message: 'Déconnexion réussie', color: 'pink'})
       this.$router.push('/login');
     },
-    isAdmin() {
-      if (this.loggedInUser) {
-        if (this.loggedInUser.data.status === true) {
-          return true
-        } else {
-          return false
-        }
-      }
-    }
   },
 };
 </script>
